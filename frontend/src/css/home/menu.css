@@ -1,0 +1,32 @@
+.menu{
+    width:28%;
+    float: left;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2),0 10px 24px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 5px;
+}
+
+.menu_content{
+    float: left;
+   width:100%;
+
+}
+.menu_content h3{
+    text-align: center;
+}
+.menu ul{
+    padding-left: 0px;
+}
+
+.menu ul li{
+    list-style-type: none;
+    margin-bottom: 10px;
+    transform: scale(1,1);
+    transition: all 0.5s;
+}
+
+.menu ul li:hover{
+    cursor: pointer;
+    transform:scale(1.2,1.2);
+}
+
+

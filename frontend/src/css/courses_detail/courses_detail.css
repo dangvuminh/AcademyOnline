@@ -1,0 +1,40 @@
+.course_detail_content{
+    width:80%;
+    display: flex;
+    justify-content: space-around;
+   
+}
+.course_detail_item{
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width:50%;
+    text-align: left;
+}
+
+.course_detail_item  h2{
+    padding:10px;
+}
+.course_detail_item .description{
+    width:70%;
+    padding:10px;
+}
+
+.course_detail_item  .price{
+    width:40%;
+    padding:10px;
+}
+
+.course_detail_item .money{
+    display: flex;
+}
+
+.course_detail_item .money button{
+    border:none;
+    height:40px;
+    width:  200px;
+    transform: scale(1,1);
+    transition: all 0.3s;
+}
+.course_detail_item .money button:hover{
+    cursor: pointer;
+    transform: scale(1.1,1.1);
+}

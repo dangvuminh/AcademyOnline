@@ -1,0 +1,26 @@
+
+.home_content  {
+   display: flex;
+   width:80%;
+   margin: 0 auto;
+}
+
+.home .signUpBtn {
+   margin-bottom: 10px;
+   font-size: 22px;
+   transform: scale(1,1);
+}
+.home .signUpBtn:hover{
+   cursor: pointer;
+   transform: scale(1.2,1.2);
+}
+
+.home .signInBtn{
+   margin-bottom: 10px;
+   font-size: 22px;
+}
+
+.home .signInBtn:hover{
+   cursor: pointer;
+   transform: scale(1.2,1.2);
+}

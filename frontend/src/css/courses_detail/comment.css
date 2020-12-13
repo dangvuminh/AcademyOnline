@@ -1,0 +1,11 @@
+.fa-paper-plane {
+    font-size: 30px;
+    margin-left: 20px;
+    transform: scale(1,1);
+    transition: all 0.4s;
+}
+
+.fa-paper-plane:hover{
+    cursor: pointer;
+    transform: scale(1.2,1.2);
+}

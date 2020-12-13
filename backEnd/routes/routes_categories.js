@@ -6,7 +6,7 @@ const categoriesModel = require("../models/categories")
 
 router.get("/",async function(req,res){
     let  categories = await categoriesModel.getCategories(); 
-    res.json(categories);
+    res.send(categories);
 })
 
 module.exports = router;
