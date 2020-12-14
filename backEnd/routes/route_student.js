@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs")
-
+const jwt = require('jsonwebtoken');
+const randToken = require('rand-token');
 const studentModel = require("../models/student")
 
 router.post("/studentSignUp", async function (req, res) {
@@ -13,7 +14,9 @@ router.post("/studentSignUp", async function (req, res) {
     let isAdded = await studentModel.createStudent(firstname, lastname, email, username, password);
     console.log(isAdded)
     if (isAdded === 1) {
-        res.sendStatus(201);
+        const refreshToken = randToken.generate(80);
+        await studentModel.updateRefrsehToken(username,refreshToken);
+        res.json({rfToken:refreshToken});
     } else
         res.sendStatus(400);
 })
@@ -33,10 +36,40 @@ router.post("/studentSignIn", async function (req, res) {
             authenticated: 0
         }) 
     } else {
-        res.json({
-            authenticated: 1,
-            user
-        });
+         //-------------JWT-------------------------
+         //console.log(user[0].student_firstname);
+         if(!user[0].refreshToken){
+            const accessToken = jwt.sign({
+                userId: user[0].student_id
+              }, 'SECRET_KEY', {
+                expiresIn: 1 * 60
+              });
+
+              const refreshToken = randToken.generate(80);
+              await studentModel.updateRefrsehToken(user[0].username,refreshToken);
+                
+                res.json({
+                    authenticated: 1,
+                    accessToken,
+                    refreshToken,
+                    user
+                  })
+             
+        } else{
+            const refreshToken = req.body.refreshToken;
+            const user = await studentModel.findRefreshToken(refreshToken);
+            const accessToken = jwt.sign({
+               userId : user[0].student_id
+              }, 'SECRET_KEY', {
+                expiresIn: 10 * 60
+              });
+              return res.json({ accessToken });
+        }
+        //---------------JWT---------------------
+        // res.json({
+        //     authenticated: 1,
+        //     user
+        // });
     }  
    
 

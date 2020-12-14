@@ -25,13 +25,14 @@ export default function Signup() {
             data:{
                 firstname:`${fname}`,lastname:`${lname}`,email:`${email}`,username:`${username}`,password:`${pw}`
             }
-        }).then(()=>{
+        }).then((result)=>{
             e.target.firstname.value = "";
             e.target.lastname.value = "";
             e.target.email.value = "";
             e.target.password.value = "";
             e.target.username.value = "";
             e.target.confirmPw.value = "";
+            localStorage.setItem("refreshToken",result.data.rfToken);
             alert("You have created an Account!")
         }).catch(err=>{
             if(err.response)

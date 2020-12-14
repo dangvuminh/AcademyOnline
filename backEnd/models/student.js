@@ -1,5 +1,5 @@
 const db = require("../ultils/db");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 
 module.exports = {
     async createStudent(firstname,lastname,email,username,password){
@@ -23,12 +23,23 @@ module.exports = {
         return user[0].map((item)=>{
             if(!bcrypt.compareSync(password, item.password)){
                 return 0;
-            } else
+            } 
+            else
             return item;
+           
          })
        } 
     },
-
+    async updateRefrsehToken(username,refreshToken){
+        const update = await db.promise().execute(`UPDATE student SET refreshToken = '${refreshToken}' WHERE username = '${username}'`);
+        return update[0];
+    },
+    async findRefreshToken(refreshToken){
+        const user = db.promise().execute(`SELECT student_id,refreshToken FROM student WHERE refreshToken = '${refreshToken}' `);
+        return user[0].map((item)=>{
+            return item;
+        })
+    },
     async getStudentProfile(username){
         const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
         return user[0];

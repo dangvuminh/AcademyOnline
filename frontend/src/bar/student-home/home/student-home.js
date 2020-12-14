@@ -10,11 +10,11 @@ export default function StudentHome() {
     const username = params.username;
     
     useEffect(() => {
-        const authorization =  localStorage.getItem("isLogin");
-        Axios({
+      Axios({
             method:"get",
             url:`http://localhost:4000/api/signIn/getStudentProfile/${username}`,
-            headers:{ "isLogin" : authorization }
+            headers: { 'isLogin' : localStorage.getItem('isLogin') } 
+
             }).then((result) => {
             setStudent(result.data);
         })
