@@ -16,7 +16,8 @@ export default function Signin(props) {
             url:"http://localhost:4000/api/studentSignIn",
             data:{
                 username:`${username}`,
-                password:`${password}`
+                password:`${password}`,
+                refreshToken: localStorage.getItem("refreshToken"),
             }
         }).then((result)=>{
             if(result.data.authenticated === -1)
@@ -26,7 +27,8 @@ export default function Signin(props) {
             } else{
                 props.login(true);
                 props.student(result.data.user[0]);
-                localStorage.setItem('isLogin', 'true');
+                localStorage.setItem('accessToken', result.data.accessToken);
+                console.log(result.data.accessToken);
             }  
         })
     }

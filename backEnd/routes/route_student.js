@@ -63,7 +63,10 @@ router.post("/studentSignIn", async function (req, res) {
               }, 'SECRET_KEY', {
                 expiresIn: 10 * 60
               });
-              return res.json({ accessToken });
+              res.json({ 
+                  accessToken,
+                  user
+                });
         }
         //---------------JWT---------------------
         // res.json({

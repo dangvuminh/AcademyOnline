@@ -35,7 +35,7 @@ module.exports = {
         return update[0];
     },
     async findRefreshToken(refreshToken){
-        const user = db.promise().execute(`SELECT student_id,refreshToken FROM student WHERE refreshToken = '${refreshToken}' `);
+        const user = await db.promise().execute(`SELECT student_id,refreshToken FROM student WHERE refreshToken = '${refreshToken}' `);
         return user[0].map((item)=>{
             return item;
         })
