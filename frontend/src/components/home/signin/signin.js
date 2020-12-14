@@ -26,7 +26,7 @@ export default function Signin(props) {
             } else{
                 props.login(true);
                 props.student(result.data.user[0]);
-                localStorage.setItem('isLogin', true);
+                localStorage.setItem('isLogin', 'true');
             }  
         })
     }
