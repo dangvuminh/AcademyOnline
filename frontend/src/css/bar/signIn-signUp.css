@@ -1,0 +1,19 @@
+ .signUpBtn {
+    margin-bottom: 10px;
+    font-size: 22px;
+    transform: scale(1,1);
+ }
+  .signUpBtn:hover{
+    cursor: pointer;
+    transform: scale(1.2,1.2);
+ }
+ 
+  .signInBtn{
+    margin-bottom: 10px;
+    font-size: 22px;
+ }
+ 
+  .signInBtn:hover{
+    cursor: pointer;
+    transform: scale(1.2,1.2);
+ }

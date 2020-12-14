@@ -1,4 +1,5 @@
 import React from 'react'
+import "../../../css/home/list.css"
 
 export default function List() {
     return (

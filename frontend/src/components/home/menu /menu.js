@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import Axios from "axios"
-
+import "../../../css/home/menu.css"
 
 
 export default function Menu(props) {

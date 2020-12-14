@@ -79,13 +79,13 @@ export default function Signup() {
                                 <div className="form-group">
                                     <label >Password:</label>
                                     <input onChange={(e)=>{setPw(e.target.value)}} 
-                                    type="password" className="form-control" id="pwd" placeholder="Enter password" name="password" />
+                                    type="password" className="form-control" placeholder="Enter password" name="password" />
                                 </div>
                                 <div className="form-group">
                                     <label>Confirm Password:</label>
                                     <p style={{color:"red"}}>{errPw}</p>
                                     <input onChange={(e)=>{setConfirmPw(e.target.value)}} 
-                                    type="password" className="form-control" id="confirmPw" placeholder="Enter password again" name="confirmPw" />
+                                    type="password" className="form-control"  placeholder="Enter password again" name="confirmPw" />
                                 </div>
                                 <button className="btn btn-primary">Sign Up</button>
                             </form>

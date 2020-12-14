@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import Axios from "axios"
 
-export default function Signin() {
+
+export default function Signin(props) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [userErr,setUserErr] = useState("");
@@ -18,17 +19,20 @@ export default function Signin() {
                 password:`${password}`
             }
         }).then((result)=>{
-            console.log(result.data.authenticated);
             if(result.data.authenticated === -1)
             setUserErr("This account no exist!");
             if(result.data.authenticated === 0){
                 setPwErr("Wrong Password!");
             } else{
-                alert("Welcome to your Account");
+                props.login(true);
+                props.student(result.data.user[0]);
+                localStorage.setItem('isLogin', true);
             }  
         })
     }
     return (
+        
+      
         <div>
              <div className="modal fade" id="signInModal">
                 <div className="modal-dialog">
@@ -52,9 +56,9 @@ export default function Signin() {
                                 <p style={{color:"red"}}>{pwErr}</p>
                                     <label >Password:</label>
                                     <input onChange={(e)=>{setPassword(e.target.value)}}
-                                    type="password" className="form-control" id="pwd" placeholder="Enter password" name="password" />
+                                    type="password" className="form-control"  placeholder="Enter password" name="password" />
                                 </div>
-                                <button className="btn btn-primary">Sign In</button>
+                                <button className="btn btn-primary" >Sign In</button>
                             </form>
 
                         </div>

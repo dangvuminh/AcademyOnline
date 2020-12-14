@@ -21,8 +21,7 @@ router.post("/studentSignUp", async function (req, res) {
 router.post("/studentSignIn", async function (req, res) {
     let password = req.body.password;
     let username = req.body.username;
-    let user = await studentModel.getStudent(username, password);
-   console.log(user);
+    let user = await studentModel.getStudentSignIn(username, password);
     if (user == -1){
         
         res.json({
@@ -41,6 +40,12 @@ router.post("/studentSignIn", async function (req, res) {
     }  
    
 
+})
+
+router.get("/getStudentProfile/:username",async function(req,res){
+    const username = req.params.username;
+    const user = await studentModel.getStudentProfile(username);
+    res.send(user);
 })
 
 module.exports = router;

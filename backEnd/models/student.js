@@ -14,10 +14,9 @@ module.exports = {
        
     },
 
-    async getStudent(username,password){
+    async getStudentSignIn(username,password){
        //const passwordDecoded = ;
        const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
-       console.log("Length: "+ user[0].length)
        if(user[0].length == 0){
         return -1;
        } else {
@@ -28,5 +27,10 @@ module.exports = {
             return item;
          })
        } 
+    },
+
+    async getStudentProfile(username){
+        const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
+        return user[0];
     }
 }

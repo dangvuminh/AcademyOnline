@@ -1,0 +1,13 @@
+.home_entrance{
+    margin-bottom: 15px;
+}
+
+.home_entrance span{
+    border: 1px solid black;
+    padding:7px 10px;
+    border-radius: 5px;
+}
+
+.home_entrance i{
+    font-size: 25px;
+}
