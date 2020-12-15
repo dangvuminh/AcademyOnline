@@ -5,16 +5,18 @@ import Signup from "../components/home/signup/signup"
 import Signin from "../components/home/signin/signin"
 import "../css/bar/signIn-signUp.css"
 
-export default function Bar() {
+export default function Bar(props) {
     const [logIn, setLogIn] = useState("");
     const [student,setStudent] = useState("");
     //localStorage.setItem("isLogin",false);
     useEffect(() => {
-        setLogIn(localStorage.getItem("isLogin"))    
+        setLogIn(localStorage.getItem("isLogin"));
     }, [logIn])
     const drawSignInState = () => {
         console.log((localStorage.getItem("isLogin")));
         if (logIn == "true") {
+            console.log(typeof(student))
+            props.studentData(JSON.stringify(student));
             return <HomeEntrance logIn={isLogin} student={student}/>
         } else  {
             return (
@@ -22,7 +24,7 @@ export default function Bar() {
                 <div className="signUpBtn " data-toggle="modal" data-target="#signUpModal">Sign up</div>
                 <Signup />
                 <div className="signInBtn" data-toggle="modal" data-target="#signInModal" data-backdrop="false">Sign in</div>
-                <Signin login={isLogin} student={getStudentName}/>
+                <Signin login={isLogin} student={getStudentName} />
             </div>
                    )
         }
@@ -40,13 +42,6 @@ export default function Bar() {
         <div className="bar">
             <h1>Welcome to our Online Academy {student.student_firstname}</h1>
             {drawSignInState()}
-            {/* <div style={{display: logIn ? 'block' : 'none'}}> <HomeEntrance /></div>
-            <div style={{display: logIn ? 'none' : 'block'}}>
-                <div className="signUpBtn " data-toggle="modal" data-target="#signUpModal">Sign up</div>
-                <Signup />
-                <div className="signInBtn" data-toggle="modal" data-target="#signInModal" data-backdrop="false">Sign in</div>
-                <Signin login={isLogin} student={getStudentName}/>
-            </div> */}
         </div>
     )
 

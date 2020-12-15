@@ -2,12 +2,14 @@ import React,{useState} from 'react'
 import Axios from "axios"
 
 
+let  studentData={};
 export default function Signin(props) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [userErr,setUserErr] = useState("");
     const [pwErr,setPwErr] = useState("");
 
+    
     const submitHandle = (e) =>{
         e.preventDefault();
        
@@ -27,6 +29,7 @@ export default function Signin(props) {
             } else{
                 props.login(true);
                 localStorage.setItem("isLogin",true);
+                studentData = result.data.user[0];
                 props.student(result.data.user[0]);
                 localStorage.setItem('accessToken', result.data.accessToken);
             }  
@@ -70,3 +73,5 @@ export default function Signin(props) {
         </div>
     )
 }
+
+export const studentDataExport = studentData ;

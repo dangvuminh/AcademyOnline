@@ -1,16 +1,18 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useContext,useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import "../../css/courses_detail/courses_detail.css"
 import "../../css/courses_detail/comment.css"
 import Comment from "./comment/comment"
+import {studentContext} from "../../App"
 
 import Axios from "axios" 
 export default function Courses_detail() {
     const [course_detail, setCourseDetail] = useState([]);
     const params = useParams();
     const course_id = params.course_id;
-
+    const student = useContext(studentContext);
+    console.log("Context"+ student);
     useEffect(() => {
         Axios.get(`http://localhost:4000/api/getSingleCourse/detail/${course_id}`).then((result) => {
             console.log(typeof (result.data));
