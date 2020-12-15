@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import "../css/bar/bar.css"
 import HomeEntrance from './student-home/home-entrance/home-entrance'
 import Signup from "../components/home/signup/signup"
@@ -6,13 +6,17 @@ import Signin from "../components/home/signin/signin"
 import "../css/bar/signIn-signUp.css"
 
 export default function Bar() {
-    const [logIn, setLogIn] = useState(false);
+    const [logIn, setLogIn] = useState("");
     const [student,setStudent] = useState("");
+    //localStorage.setItem("isLogin",false);
+    useEffect(() => {
+        setLogIn(localStorage.getItem("isLogin"))    
+    }, [logIn])
     const drawSignInState = () => {
-        console.log(logIn);
-        if (logIn) {
-            return <HomeEntrance student={student}/>
-        } else {
+        console.log((localStorage.getItem("isLogin")));
+        if (logIn == "true") {
+            return <HomeEntrance logIn={isLogin} student={student}/>
+        } else  {
             return (
             <div>
                 <div className="signUpBtn " data-toggle="modal" data-target="#signUpModal">Sign up</div>

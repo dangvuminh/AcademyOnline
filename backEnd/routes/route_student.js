@@ -57,9 +57,9 @@ router.post("/studentSignIn", async function (req, res) {
              
         } else{
             const refreshToken = req.body.refreshToken;
-            const user = await studentModel.findRefreshToken(refreshToken);
+            const result = await studentModel.findRefreshToken(refreshToken);
             const accessToken = jwt.sign({
-               userId : user[0].student_id
+               userId : result[0].student_id
               }, 'SECRET_KEY', {
                 expiresIn: 10 * 60
               });
@@ -78,7 +78,7 @@ router.post("/studentSignIn", async function (req, res) {
 
 })
 
-router.get("/getStudentProfile/:username",async function(req,res){
+router.post("/getStudentProfile/:username",async function(req,res){
     const username = req.params.username;
     const user = await studentModel.getStudentProfile(username);
     res.send(user);

@@ -26,9 +26,9 @@ export default function Signin(props) {
                 setPwErr("Wrong Password!");
             } else{
                 props.login(true);
+                localStorage.setItem("isLogin",true);
                 props.student(result.data.user[0]);
                 localStorage.setItem('accessToken', result.data.accessToken);
-                console.log(result.data.accessToken);
             }  
         })
     }

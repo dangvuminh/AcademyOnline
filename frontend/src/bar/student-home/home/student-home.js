@@ -11,10 +11,12 @@ export default function StudentHome() {
     
     useEffect(() => {
       Axios({
-            method:"get",
+            method:"post",
             url:`http://localhost:4000/api/signIn/getStudentProfile/${username}`,
-            headers: { 'accessToken' : localStorage.getItem('accessToken') } 
-
+            headers: { 'accessToken' : localStorage.getItem('accessToken') } ,
+            data:{ 
+                accessToken :localStorage.getItem('accessToken'), 
+            }
             }).then((result) => {
             setStudent(result.data);
         })
