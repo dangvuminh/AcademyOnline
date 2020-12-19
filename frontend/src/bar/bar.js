@@ -8,15 +8,13 @@ import "../css/bar/signIn-signUp.css"
 export default function Bar(props) {
     const [logIn, setLogIn] = useState("");
     const [student,setStudent] = useState("");
-    //localStorage.setItem("isLogin",false);
+   
     useEffect(() => {
-        setLogIn(localStorage.getItem("isLogin"));
+        setLogIn(localStorage.getItem("isLogin"));   
     }, [logIn])
     const drawSignInState = () => {
         console.log((localStorage.getItem("isLogin")));
         if (logIn == "true") {
-            console.log(typeof(student))
-            props.studentData(JSON.stringify(student));
             return <HomeEntrance logIn={isLogin} student={student}/>
         } else  {
             return (
@@ -36,6 +34,7 @@ export default function Bar(props) {
 
     const getStudentName = (student) => {
         setStudent(student);
+        localStorage.setItem("student",JSON.stringify(student));
     }
 
     return (

@@ -4,22 +4,37 @@ import { useParams } from "react-router-dom"
 import "../../css/courses_detail/courses_detail.css"
 import "../../css/courses_detail/comment.css"
 import Comment from "./comment/comment"
-import {studentContext} from "../../App"
-
 import Axios from "axios" 
+
 export default function Courses_detail() {
     const [course_detail, setCourseDetail] = useState([]);
     const params = useParams();
     const course_id = params.course_id;
-    const student = useContext(studentContext);
-    console.log("Context"+ student);
+    let student = {};
     useEffect(() => {
         Axios.get(`http://localhost:4000/api/getSingleCourse/detail/${course_id}`).then((result) => {
-            console.log(typeof (result.data));
             setCourseDetail(result.data);
+            student = JSON.parse(localStorage.getItem("student"));
         })
 
     }, [])
+
+    const buyCourse = (courseID,studentID) =>{
+        Axios.post({
+            method:"post",
+            url:`http://localhost:4000/api/buyCourse/${courseID}/${studentID}`,
+            data:{ 
+                accessToken: localStorage.getItem('accessToken'), 
+                courseID: courseID,
+                studentID: studentID,
+            }
+        }).then(result=>{
+            if(result.data.message == 1){
+                alert("You have bought the course!!");
+            }
+        })
+
+    }
 
     const drawCourseDetailTable = () => {
         return course_detail.map((item, index) => {
@@ -29,7 +44,7 @@ export default function Courses_detail() {
                     <h2>{item.course_name}</h2>
                     <div className="description">{item.course_content}</div>
                     <div className="money"> <h3  className="price">Price:${item.course_price}</h3>
-                        <button>Buy Now</button>
+                        <button onClick={()=>{buyCourse(item.course_id,student.student_id)}}>Buy Now</button>
                     </div>                
                 </div>
 

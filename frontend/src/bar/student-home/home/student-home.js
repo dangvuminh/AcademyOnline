@@ -13,7 +13,6 @@ export default function StudentHome() {
       Axios({
             method:"post",
             url:`http://localhost:4000/api/signIn/getStudentProfile/${username}`,
-            headers: { 'accessToken' : localStorage.getItem('accessToken') } ,
             data:{ 
                 accessToken :localStorage.getItem('accessToken'), 
             }
