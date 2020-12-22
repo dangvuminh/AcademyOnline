@@ -8,43 +8,52 @@ import Axios from "axios"
 
 export default function Courses_detail() {
     const [course_detail, setCourseDetail] = useState([]);
+    const [student,setStudent] = useState([]);
     const params = useParams();
     const course_id = params.course_id;
-    let student = {};
+
     useEffect(() => {
         Axios.get(`http://localhost:4000/api/getSingleCourse/detail/${course_id}`).then((result) => {
-            setCourseDetail(result.data);
-            student = JSON.parse(localStorage.getItem("student"));
+            setCourseDetail(result.data[0]);
+           setStudent(JSON.parse(localStorage.getItem("student")));
         })
 
     }, [])
 
     const buyCourse = (courseID,studentID) =>{
-        Axios.post({
+        console.log(courseID);
+        console.log(studentID);
+        Axios({
             method:"post",
-            url:`http://localhost:4000/api/buyCourse/${courseID}/${studentID}`,
+            url:`http://localhost:4000/api/buyCourse`,
             data:{ 
                 accessToken: localStorage.getItem('accessToken'), 
                 courseID: courseID,
                 studentID: studentID,
             }
         }).then(result=>{
-            if(result.data.message == 1){
+            console.log(result.data.state);
+            if(result.data.state == 1){
                 alert("You have bought the course!!");
             }
+        }).catch(err=>{
+            if(err)
+            throw err;
+            localStorage.setItem('isLogin',false);
+            window.open("http://localhost:3000/","_parent");
+            alert("Please log in to buy this course");
         })
 
     }
 
     const drawCourseDetailTable = () => {
-        return course_detail.map((item, index) => {
-            return <div key={index} className="course_detail_content">
+            return <div className="course_detail_content">
 
                 <div className="course_detail_item">
-                    <h2>{item.course_name}</h2>
-                    <div className="description">{item.course_content}</div>
-                    <div className="money"> <h3  className="price">Price:${item.course_price}</h3>
-                        <button onClick={()=>{buyCourse(item.course_id,student.student_id)}}>Buy Now</button>
+                    <h2>{course_detail.course_name}</h2>
+                    <div className="description">{course_detail.course_content}</div>
+                    <div className="money"> <h3  className="price">Price:${course_detail.course_price}</h3>
+                        <button onClick={()=>{buyCourse(course_detail.course_id,student.student_id)}}>Buy Now</button>
                     </div>                
                 </div>
 
@@ -54,7 +63,6 @@ export default function Courses_detail() {
                 </div>
 
             </div>
-        })
     }
 
     return (

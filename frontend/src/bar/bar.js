@@ -14,7 +14,7 @@ export default function Bar(props) {
     }, [logIn])
     const drawSignInState = () => {
         console.log((localStorage.getItem("isLogin")));
-        if (logIn == "true") {
+        if (logIn == "true" ) {
             return <HomeEntrance logIn={isLogin} student={student}/>
         } else  {
             return (

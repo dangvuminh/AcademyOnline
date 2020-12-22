@@ -7,7 +7,8 @@ export default function HomeEntrance(props) {
     const logOut=()=>{
         localStorage.setItem("isLogin",false);
         props.logIn(false);
-        window.open("/","_parent");
+        localStorage.setItem('accessToken',0);
+        window.open("/" , "_parent");
     }
     return (
         <div className="home_entrance">

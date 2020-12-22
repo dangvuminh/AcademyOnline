@@ -18,8 +18,7 @@ app.use("/api/getCoursesByCategory",route_courses);
 app.use("/api/getSingleCourse",route_courses);
 app.use("/api",route_student);
 app.use("/api/signIn",authen,route_student);
-app.use("/api/buyCourse",authen,route_enrollment);
-
+app.use("/api",authen,route_enrollment);
 
 const Port = 4000;
 app.listen(Port,()=>{
