@@ -11,6 +11,7 @@ export default function Courses_detail() {
     const [student,setStudent] = useState([]);
     const [isBought,setIsBought]= useState("");
     const [isLiked,setIsLiked]= useState("");
+    const [comment,setComment] = useState([]);
     const params = useParams();
     const course_id = params.course_id;
 
@@ -18,6 +19,23 @@ export default function Courses_detail() {
         setStudent(JSON.parse(localStorage.getItem("student")));
         Axios.get(`http://localhost:4000/api/getSingleCourse/detail/${course_id}`).then((result) => {
             setCourseDetail(result.data[0]); 
+        });
+
+     
+
+    }, [])
+
+    useEffect(() => {
+        setStudent(JSON.parse(localStorage.getItem("student")));
+        Axios({
+            method:"post",
+            url:`http://localhost:4000/api/getCommentList`,
+            data:{
+                accessToken: localStorage.getItem('accessToken'),
+                courseID:course_id,
+            }
+        }).then((result) => {
+            setComment(result.data); 
         });
 
      
@@ -137,15 +155,27 @@ export default function Courses_detail() {
 
                 <div className="course_detail_item">
                 <h2 >Point:</h2>
-                <Comment />
+                <Comment courseID={course_id} studentID={student.student_id}/>
                 </div>
 
             </div>
+    }
+    const drawCommentSection = () =>{
+        return comment.map((item,index)=>{
+            return <div key={index} className="comment_section_item">
+                <p><b>{item.student_name}</b></p>
+                <p><em>{item.feedback_content}</em></p>
+            </div>
+        })
     }
 
     return (
         <div>
             {drawCourseDetailTable()}
+            <div className="comment_section">
+                <h3>Users'Comment</h3>
+                {drawCommentSection()}
+            </div>
         </div>
     )
 }

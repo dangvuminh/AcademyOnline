@@ -26,7 +26,7 @@ router.post("/getEnrollment",async function(req,res){
    
 })
 
-router.post("/getStudentEnrolledByCourse/:courseID",async function(req,res){
+router.post("/getStudentEnrolledByCourse",async function(req,res){
     let courseID = req.body.courseID;
     let student = await enrollmentModel.getStudentEnrolledByCourse(courseID);
     if(student == 0){

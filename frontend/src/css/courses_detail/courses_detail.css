@@ -50,3 +50,17 @@
     cursor: pointer;
     transform: scale(1.1,1.1);
 }
+
+.comment_section{
+    margin-top: 20px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    height:400px;
+}
+
+.comment_section .comment_section_item{
+    box-shadow:  0 4px 8px 0 rgba(24, 23, 23, 0.5);
+    width: 30%;
+    text-align: left;
+    border-radius: 15px;
+    
+}
