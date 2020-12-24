@@ -2,11 +2,11 @@
     display:flex;
 }
 
-.student-home-content{
+.student-home-category{
     display:flex;
 }
 
-.student-home-content .student-home-item{
+.student-home-category .student-home-item{
    padding:0px 30px;
     height: 150px;
     margin-left: 20px;

@@ -43,5 +43,11 @@ module.exports = {
     async getStudentProfile(username){
         const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
         return user[0];
+    },
+    async getStudentEnrolledByCourse(courseID){
+        const student = await db.promise().execute(`SELECT student_id_fk FROM enrollment WHERE course_id_fk = ${courseID}`);
+        if(student[0] == 0)
+        return 0;
+        return student[0];
     }
 }

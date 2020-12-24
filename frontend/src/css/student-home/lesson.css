@@ -1,0 +1,18 @@
+.ownLessonTable{
+    margin:30px;
+    
+}
+thead tr th{
+    padding:30px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+tbody tr td{
+
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+tr td{
+    padding:30px;
+    font-size: 20px;
+}
