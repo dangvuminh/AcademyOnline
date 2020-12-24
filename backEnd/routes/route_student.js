@@ -84,18 +84,6 @@ router.post("/getStudentProfile/:username",async function(req,res){
     res.send(user);
 })
 
-router.get("/getStudentEnrolledByCourse/:courseID",async function(req,res){
-    let courseID = req.params.courseID;
-    let student = await studentModel.getStudentEnrolledByCourse(courseID);
-    if(student == 0){
-        res.json({
-            state: 0,
-        })
-    } else{       
-    res.json(student);
-    }
-   
-})
 
 
 module.exports = router;

@@ -25,5 +25,21 @@ module.exports = {
         if(list[0] == 0)
         return 0;
         return 1;
-    }
+    },
+
+    async getAll(studentID) {
+       
+         const list = await db.promise().execute(
+             `SELECT c.course_name,t.teacher_name 
+         FROM course c LEFT JOIN 
+         teacher t ON c.teacher_fk = t.teacher_id
+         LEFT JOIN favorite_course f ON c.course_id  = f.f_course_id_fk
+         WHERE f.f_student_id_fk = ${studentID}
+         `
+         );
+       
+        if (list[0] == 0)
+            return 0;
+        return list[0];
+    },
 }

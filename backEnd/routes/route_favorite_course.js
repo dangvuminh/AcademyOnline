@@ -25,4 +25,17 @@ router.post("/getFavoriteCourseState",async function(req,res){
     }
 });
 
+router.post("/getFavoriteCourseList",async function(req,res){
+    let studentID = req.body.studentID;
+    let list = await favorite_course_model.getAll(studentID);
+    if(list == 0){
+        res.json({
+            state: 0,
+        })
+    } else{       
+    res.json(list);
+    }
+   
+});
+
 module.exports = router;

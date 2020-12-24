@@ -17,10 +17,12 @@ export default function OwnLesson(props) {
         <div className="ownLessonTable">
             <table>
                 <thead> 
+                    <tr> <th colSpan="2">Your Own Course List</th></tr>
                     <tr>
                      <th>Course Name</th>
                      <th>Teacher Name</th>
-                 </tr></thead>
+                 </tr>
+                 </thead>
                 <tbody>
                 
                  {drawCourseTable()}

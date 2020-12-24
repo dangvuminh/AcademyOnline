@@ -25,7 +25,14 @@ export default function Courses_detail() {
     }, [])
 
     useEffect(()=>{
-        Axios.get(`http://localhost:4000/api/getStudentEnrolledByCourse/${course_id}`).then(result=>{
+        Axios({
+            method:"post",
+            url:`http://localhost:4000/api/getStudentEnrolledByCourse`,
+            data:{ 
+                courseID: course_id ,
+                accessToken: localStorage.getItem('accessToken'),
+            }
+        }).then(result=>{
             if(result.data.state !=0){
               return result.data.map((item)=>{
                   if(item.student_id_fk == student.student_id){
@@ -83,7 +90,7 @@ export default function Courses_detail() {
            
         }).catch(err=>{
             if(err)
-            throw err;
+            console.log(err);
             localStorage.setItem('isLogin',false);
             window.open("http://localhost:3000/","_parent");
             alert("Please log in to buy this course");
@@ -107,8 +114,8 @@ export default function Courses_detail() {
                 alert("You have bought the course!!");
             }
         }).catch(err=>{
-            if(err)
-            throw err;
+            // if(err)
+            // throw err;
             localStorage.setItem('isLogin',false);
             window.open("http://localhost:3000/","_parent");
             alert("Please log in to buy this course");

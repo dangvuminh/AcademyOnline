@@ -4,6 +4,8 @@ import Axios from "axios"
 import avatar from "../../../img/avatar.png"
 import "../../../css/student-home/student-home.css"
 import OwnLesson  from "../lesson/ownLesson"
+import FavoriteLesson from "../lesson/favoriteLesson"
+
 
 export default function StudentHome() {
     const [student, setStudent] = useState([]);
@@ -30,7 +32,7 @@ export default function StudentHome() {
         })
     }, []);
 
-    const getOwnCourses = () => {
+    const getOwnCourseList = () => {
         Axios({
             method: "post",
             url: `http://localhost:4000/api/getEnrollment`,
@@ -39,26 +41,61 @@ export default function StudentHome() {
                 accessToken: localStorage.getItem('accessToken'),
             }
         }).then(result => {
-            if (result.data.state == 0)
+            if (result.data.state == 0){
                 setMsg("No course Available right now");
+                    setIsFavorite(false);
+            }
                 else{
                     console.log(result.data);
                     setLesson(result.data);
                     setIsOwn(true);
+                    setIsFavorite(false);
+                    setMsg("");
                 }
                
         }).catch(err => {
-            if (err) throw err;
+            //if (err) throw err;
             alert("Your Log-in time has run out.Please Log in again!!");
             localStorage.setItem('isLogin', false);
             window.open("/", "_parent");
         })
     }
 
+   const getFavoriteCourseList = () =>{
+    Axios({
+        method: "post",
+        url: `http://localhost:4000/api/getFavoriteCourseList`,
+        data: {
+            studentID: student.student_id,
+            accessToken: localStorage.getItem('accessToken'),
+        }
+    }).then(result => {
+        if (result.data.state == 0){
+            setMsg("No Favorite Course ");
+            setIsOwn(false);
+        }
+            else{
+                console.log(result.data);
+                setLesson(result.data);
+                setIsFavorite(true);
+                setIsOwn(false);
+                setMsg("");
+            }
+           
+    }).catch(err => {
+        //if (err) throw err;
+        alert("Your Log-in time has run out.Please Log in again!!");
+        localStorage.setItem('isLogin', false);
+        window.open("/", "_parent");
+    })
+   }
+
     const drawLesson=()=>{
-        if(isOwn){
+        if(isOwn == true){
             return <OwnLesson lesson={lesson}/>
-        } 
+        } else if(isFavorite ==true){
+            return <FavoriteLesson lesson={lesson}/>
+        }
     }
 
     const drawStudentHome = () => {
@@ -76,17 +113,17 @@ export default function StudentHome() {
             <div className="student-home-course-manage">
 
                 <div className="student-home-category">
-                    <div className="favorite student-home-item">
+                    <div onClick={()=>{ getFavoriteCourseList() }} className="favorite student-home-item">
                         <h2>Your Favourite Courses</h2>
                         <i class="fa fa-heart"></i>
                     </div>
-                    <div onClick={() => { getOwnCourses() }} className="boughtCourses student-home-item">
+                    <div onClick={() => { getOwnCourseList() }} className="boughtCourses student-home-item">
                         <h2>Your Own Courses</h2>
                         <i class="fa fa-book"></i>
                     </div>
                 </div>
                 <div className="student-home-course-list">
-                <div className="msg">{msg}</div>
+                <h2 style={{marginTop:"25px"}} className="msg">{msg}</h2>
                 {drawLesson()}
                 </div>
             </div>
