@@ -62,5 +62,14 @@
     width: 30%;
     text-align: left;
     border-radius: 15px;
-    
+    padding:5px;
+    margin-top: 10px;
+}
+
+.comment_section h3{
+    border: 1px solid black;
+}
+
+.comment_section_item span{
+    margin-left: 10px;
 }

@@ -1,10 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Menu from "./menu /menu"
 import List from "./list/list"
 import Courses from "./courses/courses"
 import   "../../css/home/home.css"
-
-
+import Axios from "axios"
 
 
 export default function Home() {
@@ -12,6 +11,13 @@ export default function Home() {
     const getCourses=(courses)=>{
         setCourses(courses);
     }
+
+    useEffect(() => {
+        Axios.get("http://localhost:4000/api/updateStudentNumber").then(result=>{
+            console.log(result.data)
+        })
+        
+    }, [])
     return (
         <div className="home">
             <div className ="home_content">

@@ -4,7 +4,6 @@ import "../../../css/student-home/lesson.css"
 export default function OwnLesson(props) {
 
     const drawCourseTable = () =>{
-        console.log(props.lesson)
         return props.lesson.map((item,index)=>{
             return <tr key={index}>
                 <td>{item.course_name}</td>

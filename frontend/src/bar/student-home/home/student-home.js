@@ -46,7 +46,6 @@ export default function StudentHome() {
                     setIsFavorite(false);
             }
                 else{
-                    console.log(result.data);
                     setLesson(result.data);
                     setIsOwn(true);
                     setIsFavorite(false);
@@ -75,7 +74,6 @@ export default function StudentHome() {
             setIsOwn(false);
         }
             else{
-                console.log(result.data);
                 setLesson(result.data);
                 setIsFavorite(true);
                 setIsOwn(false);

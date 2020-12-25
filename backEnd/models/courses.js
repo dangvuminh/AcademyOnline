@@ -12,5 +12,6 @@ module.exports = {
     async getSingle(courseID){
         const single = await db.promise().execute(`SELECT * FROM course WHERE course_id = ${courseID}`);
         return single[0];
-    }
+    },
+
 }

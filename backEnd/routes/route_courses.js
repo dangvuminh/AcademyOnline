@@ -14,4 +14,6 @@ router.get("/detail/:courseID",async function(req,res){
     res.json(course);
 })
 
+
+
 module.exports = router;

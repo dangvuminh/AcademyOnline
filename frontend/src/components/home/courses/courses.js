@@ -6,7 +6,7 @@ export default function Courses(props) {
 
     const drawCoursesTable=()=>{
         return props.courses.map((item,index)=>{
-        return <div className="course_item">
+        return <div key={index} className="course_item">
             <NavLink className="nav-link" to={`/courses/${item.course_id}`}>
             <h3>{item.course_name}</h3>
             <div className="detail">

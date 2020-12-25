@@ -13,7 +13,6 @@ module.exports = function(req,res,next){
         }
         next();
       } else {
-          console.log("HIHI");
         return res.status(400).json({
           message: 'Access token not found.'
         })

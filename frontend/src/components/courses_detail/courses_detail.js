@@ -40,7 +40,7 @@ export default function Courses_detail() {
 
      
 
-    }, [])
+    }, [comment])
 
     useEffect(()=>{
         Axios({
@@ -163,7 +163,7 @@ export default function Courses_detail() {
     const drawCommentSection = () =>{
         return comment.map((item,index)=>{
             return <div key={index} className="comment_section_item">
-                <p><b>{item.student_name}</b></p>
+                <p><b>{item.student_name}</b> <span>{item.feedback_time}</span></p>
                 <p><em>{item.feedback_content}</em></p>
             </div>
         })
