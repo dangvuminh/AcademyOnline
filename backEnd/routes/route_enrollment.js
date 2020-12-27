@@ -7,7 +7,6 @@ router.post("/buyCourse",async function(req,res){
     let courseID = req.body.courseID;
     let studentID = req.body.studentID;
     let state = await enrollmentModel.createEnrollment(courseID,studentID);
-    console.log(state);
     res.json({
         state : state
     })

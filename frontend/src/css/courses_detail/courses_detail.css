@@ -1,4 +1,9 @@
 .course_detail_content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.course_detail_left{
     width:80%;
     display: flex;
     justify-content: space-around;
@@ -14,6 +19,9 @@
     padding:10px;
 }
 
+.course_detail_content .point{
+    margin-left: 20px;
+}
 
 /* Heart the course */
 .course_detail_item  h2 i{

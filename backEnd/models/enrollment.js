@@ -1,11 +1,19 @@
 const db = require("../ultils/db");
 module.exports = {
     async createEnrollment(courseID, studentID) {
-        console.log("HOHO");
+        
         const single = await db.promise().execute(`INSERT INTO enrollment (course_id_fk,student_id_fk) VALUES ('${courseID}','${studentID}')`);
         if (single[0].length == 0)
-            return 0;
-        return 1;
+            return 0; else{
+                await db.promise().execute(
+                    ` UPDATE course c
+                        SET c.num_of_enrollments = ( SELECT COUNT( e.course_id_fk ) 
+                            FROM enrollment e 
+                                 WHERE c.course_id = e.course_id_fk ) `
+                );
+                return 1;
+            }
+       
     },
 
     async getAll(studentID) {
