@@ -1,23 +1,37 @@
 
-import React from "react"
+import React,{useEffect,useState} from "react"
 import './App.css';
 import Home from "./components/home/home"
 import {BrowserRouter,Route} from "react-router-dom"
 import Courses_detail from "./components/courses_detail/courses_detail"
 import Bar from "./bar/bar"
 import StudentHome from "./bar/student-home/home/student-home"
-
+import AdminSignIn from "./components/admin/admin_signIn"
+import AdminHome from "./components/admin/adminhome"
+import AuthenticatedRoute from "./components/admin/authen/authenticatedRoute"
+import NotFound from "./components/admin/authen/notFound"
+import AdminSignInRoute from "./components/admin/adminSignInRoute"
 
 function App() {
-  
   return (
    
     <div className="App"> 
        <BrowserRouter>
+       {/* <div style={{display : localStorage.getItem("adminIsLogIn") == true ? "none" : "block"}}> */}
        <Bar />
+       {/* </div> */}
        <Route path="/" component={Home} exact/>
         <Route path="/courses/:course_id" component={Courses_detail} exact/>
         <Route path="/student-home/:username" component={StudentHome} exact/>
+
+        <AuthenticatedRoute
+          path="/admin-home"
+          component={AdminHome}
+        
+        />
+        {/* <Route path="/admin" component={AdminSignIn}  exact/> */}
+        <AdminSignInRoute path="/admin" component={AdminSignIn} />
+        <Route  path="/notfound" component={NotFound} exact/>
       </BrowserRouter>
     </div>
    
