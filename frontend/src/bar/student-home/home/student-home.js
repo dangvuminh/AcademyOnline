@@ -5,6 +5,7 @@ import avatar from "../../../img/avatar.png"
 import "../../../css/student-home/student-home.css"
 import OwnLesson  from "../lesson/ownLesson"
 import FavoriteLesson from "../lesson/favoriteLesson"
+import ProfileEdit from "../home/profileEdit";
 
 
 export default function StudentHome() {
@@ -15,13 +16,14 @@ export default function StudentHome() {
     const [msg,setMsg] = useState("");
     const params = useParams();
     const username = params.username;
-
+    
     useEffect(() => {
         Axios({
             method: "post",
-            url: `http://localhost:4000/api/signIn/getStudentProfile/${username}`,
+            url: `http://localhost:4000/api/student/getStudentData`,
             data: {
                 accessToken: localStorage.getItem('accessToken'),
+                username:username
             }
         }).then((result) => {
             setStudent(result.data[0]);
@@ -30,7 +32,7 @@ export default function StudentHome() {
             localStorage.setItem('isLogin', false);
             window.open("/", "_parent");
         })
-    }, []);
+    }, [student]);
 
     const getOwnCourseList = () => {
         Axios({
@@ -104,7 +106,8 @@ export default function StudentHome() {
                 <div className="card-body">
                     <h4 className="card-title">{student.student_firstname} {student.student_lastname}</h4>
                     <p className="card-text">Some example text.</p>
-                    <a href="#" className="btn btn-primary">Edit Profile</a>
+                    
+                    <ProfileEdit student={student} />
                 </div>
             </div>
 

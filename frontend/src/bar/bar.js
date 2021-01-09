@@ -5,13 +5,18 @@ import Signup from "../components/home/signup/signup"
 import Signin from "../components/home/signin/signin"
 import "../css/bar/signIn-signUp.css"
 
-export default function Bar(props) {
+export default function Bar() {
     const [logIn, setLogIn] = useState("");
     const [student,setStudent] = useState("");
-   
+    useEffect(()=>{
+        if(logIn == "true")
+        setStudent(JSON.parse(localStorage.getItem("student")));
+    },[logIn])
+
     useEffect(() => {
         setLogIn(localStorage.getItem("isLogin"));   
     }, [logIn])
+
     const drawSignInState = () => {
         console.log((localStorage.getItem("isLogin")));
         if (logIn == "true" ) {
@@ -22,7 +27,7 @@ export default function Bar(props) {
                 <div className="signUpBtn " data-toggle="modal" data-target="#signUpModal">Sign up</div>
                 <Signup />
                 <div className="signInBtn" data-toggle="modal" data-target="#signInModal" data-backdrop="false">Sign in</div>
-                <Signin login={isLogin} student={getStudentName} />
+                <Signin login={isLogin}  />
             </div>
                    )
         }
@@ -32,14 +37,10 @@ export default function Bar(props) {
         setLogIn(logIn);
     }
 
-    const getStudentName = (student) => {
-        setStudent(student);
-        localStorage.setItem("student",JSON.stringify(student));
-    }
-
     return (
         <div className="bar">
-            <h1>Welcome to our Online Academy {student.student_firstname}</h1>
+            <h1>Welcome to our Online Academy {student.student_firstname}
+            </h1>
             {drawSignInState()}
         </div>
     )

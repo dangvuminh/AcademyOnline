@@ -11,9 +11,7 @@ export default function Signup() {
     const [confirmPw,setConfirmPw]  = useState("");
     const [errUsername,setErrUsername] = useState("");
     const [errPw,setErrPw] = useState("");
-    //  let showError=()=>{
-    //     return "";
-    //  }
+   
      const handleSubmit = (e) =>{
        e.preventDefault();
        if(confirmPw !== pw){
@@ -21,7 +19,7 @@ export default function Signup() {
        } else
         Axios({
             method:"post",
-            url:"http://localhost:4000/api/studentSignUp",
+            url:"http://localhost:4000/api/student/studentSignUp",
             data:{
                 firstname:`${fname}`,lastname:`${lname}`,email:`${email}`,username:`${username}`,password:`${pw}`
             }

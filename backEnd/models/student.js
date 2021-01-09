@@ -14,10 +14,10 @@ module.exports = {
        
     },
 
-    async getStudentSignIn(username,password){
+    async validateStudent(username,password){
        //const passwordDecoded = ;
        const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
-       if(user[0].length == 0){
+       if(user[0] == 0){
         return -1;
        } else {
         return user[0].map((item)=>{
@@ -40,7 +40,7 @@ module.exports = {
             return item;
         })
     },
-    async getStudentProfile(username){
+    async getStudentData(username){
         const user = await db.promise().execute(`SELECT * FROM student WHERE username = '${username}'`);
         return user[0];
     },

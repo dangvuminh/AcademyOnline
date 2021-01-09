@@ -9,32 +9,51 @@ export default function Signin(props) {
     const [userErr,setUserErr] = useState("");
     const [pwErr,setPwErr] = useState("");
 
-    
+    const storeStudentData = (username) => {
+        Axios({
+            method: "post",
+            url: `http://localhost:4000/api/student/getStudentData`,
+            data: {
+                accessToken: localStorage.getItem('accessToken'),
+                username:username
+            }
+        }).then(result=>{
+            localStorage.setItem("student",JSON.stringify(result.data[0]));
+        })
+    }
+
     const submitHandle = (e) =>{
         e.preventDefault();
        
         Axios({
             method:"post",
-            url:"http://localhost:4000/api/studentSignIn",
+            url:"http://localhost:4000/api/student/studentSignIn",
             data:{
                 username:`${username}`,
                 password:`${password}`,
                 refreshToken: localStorage.getItem("refreshToken"),
             }
         }).then((result)=>{
-            if(result.data.authenticated === -1)
-            setUserErr("This account no exist!");
-            if(result.data.authenticated === 0){
+            console.log(result.data.authenticated)
+            if(result.data.authenticated == -1)
+            {
+                setUserErr("This account no exist!");
+                setPwErr("");
+            }
+            else
+            if(result.data.authenticated == 0){
                 setPwErr("Wrong Password!");
+                setUserErr("");
             } else{
                 props.login(true);
                 localStorage.setItem("isLogin",true);
-                studentData = result.data.user[0];
-                props.student(result.data.user[0]);
                 localStorage.setItem('accessToken', result.data.accessToken);
+                storeStudentData(username);
             }  
         })
     }
+
+
     return (
         
       

@@ -1,0 +1,35 @@
+.modal-content .categories {
+    
+}
+
+.modal-content .categories span {
+    margin-right: 15px;
+   
+    padding: 0px 11px;
+    position: relative;
+}
+
+.modal-content .categories a::before{
+    content:"";
+    width:0px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top:27px;left: 0;
+    transition: all 0.5s;
+}
+
+.modal-content .categories span:hover {
+    cursor: pointer; 
+}
+
+.modal-content .categories span:first-child:hover a::before {
+    width: 100px;
+   
+}
+
+.modal-content .categories span:hover a::before {
+    width: 150px;
+   
+}
+
