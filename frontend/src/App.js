@@ -11,6 +11,7 @@ import AdminHome from "./components/admin/adminhome"
 import AuthenticatedRoute from "./components/admin/authen/authenticatedRoute"
 import NotFound from "./components/admin/authen/notFound"
 import AdminSignInRoute from "./components/admin/adminSignInRoute"
+import  EditForm from "./components/admin/courses/editForm"
 
 function App() {
   return (
@@ -26,12 +27,20 @@ function App() {
 
         <AuthenticatedRoute
           path="/admin-home"
+          exact
           component={AdminHome}
         
+        />
+
+        <AuthenticatedRoute
+          path="/admin-home/edit-course-form/:course_id"
+          exact
+          component={EditForm} 
         />
         {/* <Route path="/admin" component={AdminSignIn}  exact/> */}
         <AdminSignInRoute path="/admin" component={AdminSignIn} />
         <Route  path="/notfound" component={NotFound} exact/>
+       
       </BrowserRouter>
     </div>
    

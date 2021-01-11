@@ -40,7 +40,7 @@ export default function Point(props) {
         courseID: courseID,
         point: parseInt(point)
       }
-    }).then(result => {
+    }).then(() => {
       alert("Thank you for grading the Course!");
       getAverage();
     }).catch(err => {
@@ -49,9 +49,7 @@ export default function Point(props) {
             alert("Please log in to grade this course");
     })
   }
-  const getPoint = (point) => {
-    setPoint(point)
-  }
+ 
   return (
     <div className="point">
       <h3>Give this course some points!</h3>
