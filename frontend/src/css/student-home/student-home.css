@@ -24,3 +24,27 @@
     font-size: 45px;
 }
 
+.profilePic{
+    position: relative;
+}
+
+.profilePicChanger{
+    height: 307px;
+    width:298px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    left:0;
+    top:0;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.profilePicChanger:hover {
+    opacity: 1;
+}
+
+.profilePicChanger  input{
+    padding-left: 50px;
+    padding-top: 120px;
+}

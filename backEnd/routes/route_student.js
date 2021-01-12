@@ -88,12 +88,23 @@ router.post("/checkPassword",async function(req,res){
     const username = req.body.username;
     const password = req.body.password;
     const user = await studentModel.validateStudent(username,password);
-    console.log(user);
     if(user == 0){
         res.json(0);
     } else{
         res.json(1);
     }
 })
+
+router.post("/uploadImage",async function(req,res){
+    const studentID = req.body.studentID;
+    const image = req.body.image;
+    const state = await studentModel.uploadImage(studentID,image);
+    if(state == 0){
+        res.json(0);
+    } else{
+        res.json(1);
+    }
+})
+
 
 module.exports = router;

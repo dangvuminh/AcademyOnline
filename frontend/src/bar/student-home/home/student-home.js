@@ -14,8 +14,10 @@ export default function StudentHome() {
     const [isOwn,setIsOwn] = useState(false);
     const [isFavorite,setIsFavorite] = useState(false);
     const [msg,setMsg] = useState("");
+    const [profileImg,setProfileImg] = useState(avatar);
     const params = useParams();
     const username = params.username;
+    
     
     useEffect(() => {
         Axios({
@@ -27,12 +29,36 @@ export default function StudentHome() {
             }
         }).then((result) => {
             setStudent(result.data[0]);
+            setProfileImg(result.data[0].student_image);
         }).catch(err => {
             alert("Your Log-in time has run out.Please Log in again!!");
             localStorage.setItem('isLogin', false);
             window.open("/", "_parent");
+        });
+    }, []);
+
+    const storeImage = (image) => {
+        Axios({
+            method:"post",
+            url:"http://localhost:4000/api/student/uploadImage",
+            data:{
+                studentID:student.student_id,
+                image: image,
+            }
         })
-    }, [student]);
+    }
+
+    const profileImgHanler = (e) => {
+        const reader = new FileReader();
+        reader.onload=()=>{
+            if(reader.readyState === 2 ){
+                setProfileImg(reader.result);
+                storeImage(reader.result);
+            }
+        }
+       
+        reader.readAsDataURL(e.target.files[0]);
+    }
 
     const getOwnCourseList = () => {
         Axios({
@@ -102,10 +128,15 @@ export default function StudentHome() {
         return <div className="student-home">
 
             <div className="student-home-profile" className="card" style={{ width: '300px' }}>
-                <img className="card-img-top" src={avatar} alt="Card image" />
+                
+                <div className="profilePic">
+                <img className="card-img-top" src={profileImg} alt="Card image" />
+                <div className="profilePicChanger">
+                    <input type="file" name="image-upload" accept="image/*" onChange={profileImgHanler}/>
+                </div>
+                </div>
                 <div className="card-body">
                     <h4 className="card-title">{student.student_firstname} {student.student_lastname}</h4>
-                    <p className="card-text">Some example text.</p>
                     
                     <ProfileEdit student={student} />
                 </div>
