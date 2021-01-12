@@ -7,7 +7,13 @@ router.post("/addPoint",async function(req,res){
     let point = req.body.point;
     let courseID = req.body.courseID;
     let state = await point_model.addPoint(courseID,studentID,point); 
-    res.json(state)
+    if(state === 0){
+        res.json({state:0});
+    }
+    else{
+        res.json({state:1})
+    }
+    
 });
 
 router.post("/getStateOfPoint",async function(req,res){

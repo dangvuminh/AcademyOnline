@@ -22,7 +22,7 @@ function App() {
        <Bar />
        {/* </div> */}
        <Route path="/" component={Home} exact/>
-        <Route path="/courses/:course_id" component={Courses_detail} exact/>
+        <Route path="/courses/:course_id/:student_id" component={Courses_detail} exact/>
         <Route path="/student-home/:username" component={StudentHome} exact/>
 
         <AuthenticatedRoute

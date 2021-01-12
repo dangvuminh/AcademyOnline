@@ -12,7 +12,7 @@ export default function CourseHandle() {
         setCourses(result.data);
     })
     }
-    const deleteCourse = (courseID) => {
+    const deleteCourse = (courseID,category) => {
       Axios({
         method:"post",
         url:"http://localhost:4000/api/course/deleteCourse",
@@ -22,6 +22,10 @@ export default function CourseHandle() {
     }).then((result)=> {
         if(result.data.state == 1){
             alert("Delete course Successfully");
+            Axios.get(`http://localhost:4000/api/getCoursesByCategory/${category}`)
+            .then(result => {
+              setCourses(result.data);
+    })
         } else{
             alert("Cannot delete the course");
         }
@@ -43,7 +47,7 @@ export default function CourseHandle() {
               </NavLink>
 
               </td>
-            <td><button onClick={()=>deleteCourse(item.course_id)} type="button" className="btn btn-danger">Delete</button></td>
+            <td><button onClick={()=>deleteCourse(item.course_id,item.category_type)} type="button" className="btn btn-danger">Delete</button></td>
                     </tr>
         })
         

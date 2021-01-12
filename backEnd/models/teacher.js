@@ -10,5 +10,15 @@ module.exports = {
         }
         return list[0];
     },
-
+    async createTeacher(username,password){
+        const user = await db.promise().execute(
+            `(SELECT username FROM teacher WHERE username = '${username}')`
+        );
+        if(user[0] == 0){
+         await db.promise().execute(
+                `INSERT INTO teacher (username,password) VALUES ('${username}','${password}')`);
+            return 1;
+        }
+        return 0;
+    },
 }

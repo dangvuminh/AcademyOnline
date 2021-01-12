@@ -9,58 +9,50 @@ import Axios from "axios"
 
 export default function Courses_detail() {
     const [course_detail, setCourseDetail] = useState([]);
-    const [student, setStudent] = useState([]);
     const [isBought, setIsBought] = useState([]);
     const [isLiked, setIsLiked] = useState([]);
     const [comment, setComment] = useState([]);
-    const [point, setPoint] = useState([]);
-    const [pointState,setPointState] = useState("");
+    const [point, setPoint] = useState(0);
     const params = useParams();
     const course_id = params.course_id;
-
+    const studentID = params.student_id;
+   
     useEffect(() => {
-        setStudent(JSON.parse(localStorage.getItem("student")));
+        setPoint(0);
         Axios.get(`http://localhost:4000/api/getSingleCourse/detail/${course_id}`).then((result) => {
             setCourseDetail(result.data[0]);
         });
     }, [])
 
-    // useEffect(() => {
-    //     Axios({
-    //       method:"post",
-    //       url:`http://localhost:4000/api/getStateOfPoint`,
-    //       data:{
-    //         accessToken: localStorage.getItem('accessToken'),
-    //         studentID: student.student_id,
-    //         courseID: course_id,
-    //       }
-    //     }).then((result) => {
-    //         setPointState(result.data[0].enrollment_point);
-    //     });
-    //   }, [])
 
     useEffect(() => {
-        let average = 0;
-        let count = 0;
-        let pointArray = [];
-        Axios.get(`http://localhost:4000/api/getPointsById/${course_id}`).then((result) => {
+    //     let average = 0;
+    //     let count = 0;
+    //     let pointArray = [];
+    //     Axios.get(`http://localhost:4000/api/getPointsById/${course_id}`).then((result) => {
         
-        pointArray = result.data;
-        console.log((pointArray));
-        for(let  i = 0 ; i < pointArray.length ; i++){
-            if(pointArray[i].enrollment_point != null){
-                average += pointArray[i].enrollment_point;
-                count ++;
+    //     pointArray = result.data;
+    //     for(let  i = 0 ; i < pointArray.length ; i++){
+    //         if(pointArray[i].enrollment_point != null){
+    //             average += pointArray[i].enrollment_point;
+    //             count ++;
                
-            }
-        }
-        average = average/count;
-        setPoint(average);
-    });
+    //         }
+    //     }
+    //     if(count != 0){
+    //         average = average/count;
+    //         setPoint(average);
+    //     } else{
+    //         setPoint(0);
+    //     }
+        
+    // });
+        Axios.get(`http://localhost:4000/api/course/getCoursePoint/${course_id}`).then((result) => {
+            setPoint(result.data[0].course_point);
+        })
     }, [])
+
     useEffect(() => {
-        console.log("comment")
-        setStudent(JSON.parse(localStorage.getItem("student")));
         Axios({
             method: "post",
             url: `http://localhost:4000/api/getCommentList`,
@@ -75,7 +67,7 @@ export default function Courses_detail() {
     },[])
 
     useEffect(() => {
-
+       
         Axios({
             method: "post",
             url: `http://localhost:4000/api/getStudentEnrolledByCourse`,
@@ -86,10 +78,11 @@ export default function Courses_detail() {
         }).then(result => {
             if (result.data.state != 0) {
                 return result.data.map((item) => {
-                    if (item.student_id_fk == student.student_id) {
+                    if(item.student_id_fk == studentID) {  
                         setIsBought(true);
+                    }  else{
+                        setIsBought(false);
                     }
-
                 })
             } else {
                 setIsBought(false);
@@ -108,12 +101,17 @@ export default function Courses_detail() {
             }
         }).then(result => {
             if (result.data.state != 0) {
+            
                 return result.data.map((item) => {
-                    if (item.f_student_id_fk == student.student_id) {
+                    if(item.f_student_id_fk == studentID) {
+                        
                         setIsLiked(true);
+                    } else{
+                        setIsLiked(false);
                     }
                 })
-            } else {
+            } 
+            else {
                 setIsLiked(false);
 
             }
@@ -125,7 +123,7 @@ export default function Courses_detail() {
     },[])
 
     const likeTheCourse = (courseID, studentID, state) => {
-
+        
         Axios({
             method: "post",
             url: "http://localhost:4000/api/changeFavoriteCourseState",
@@ -172,26 +170,28 @@ export default function Courses_detail() {
 
     }
     const getPoint = (point) => {
+    
         setPoint(point)
     }
     const drawCourseDetailTable = () => {
+
         return <div className="course_detail_content">
             <div className="course_detail_left">
                 <div className="course_detail_item">
-                    <h3>{course_detail.course_name} <span onClick={() => { likeTheCourse(course_detail.course_id, student.student_id, isLiked) }} style={{ color: (isLiked)  ? 'red' : 'grey' }}><i class="fa fa-heart"></i></span></h3>
+                    <h3>{course_detail.course_name} <span onClick={() => { likeTheCourse(course_detail.course_id, studentID, isLiked) }} style={{ color: (isLiked)  ? 'red' : 'grey' }}><i class="fa fa-heart"></i></span></h3>
                     <div className="description">{course_detail.course_content}</div>
                     <div className="money"> <h3 className="price">Price:${course_detail.course_price}</h3>
                         <button style={{ display: isBought ? 'none' : 'block', }}
-                            onClick={() => { buyCourse(course_detail.course_id, student.student_id) }}>Buy Now</button>
+                            onClick={() => { buyCourse(course_detail.course_id, studentID) }}>Buy Now</button>
                     </div>
                 </div>
 
                 <div className="course_detail_item">
                     <h2 >Point: {point} / 5</h2>
-                    <Comment courseID={course_id} studentID={student.student_id} />
+                    <Comment courseID={course_id} studentID={studentID} />
                 </div>
             </div>
-                <Point courseID={course_id} studentID={student.student_id} point={getPoint} pointState={pointState}/>
+                <Point courseID={course_id} studentID={studentID} point={getPoint} />
            
         </div>
     }

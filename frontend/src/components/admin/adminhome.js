@@ -1,24 +1,30 @@
 import React,{useState} from 'react'
 import CourseHandle from "./courses/course_handle"
+import CreateCourse from './courses/createCourse'
+import CreateTeacher from "./teacher/createTeacher"
 
 export default function AdminHome() {
-    const [courseHandleState,setCourseHandleState] =useState(false)
+    const [courseState,setCourseState] =useState(0)
     const drawAdminTask = () => {
-        if(courseHandleState === true){
+        if(courseState === 1){
             return <CourseHandle />
-        }
+        } else if(courseState === 2){
+            return <CreateTeacher />
+        } else if(courseState === 3){
+            return <CreateCourse />
+        } 
     }
     return (
         <div>
             <h3>Admin Home</h3>
             <ul className="nav nav-tabs">
-                <li className="nav-item" onClick={()=>{setCourseHandleState(true)}}>
+                <li className="nav-item" onClick={()=>{setCourseState(1)}}>
                     <a className="nav-link " href="#">Courses</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item" onClick={()=>{setCourseState(2)}}>
                     <a className="nav-link" href="#">Add Teachers</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item" onClick={()=>{setCourseState(3)}}>
                     <a className="nav-link" href="#">Create Courses</a>
                 </li>
                 <li className="nav-item">

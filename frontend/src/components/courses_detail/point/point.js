@@ -4,7 +4,6 @@ import Axios from "axios"
 
 export default function Point(props) {
   const [point, setPoint] = useState('0');
-  
   const courseID = props.courseID;
   const studentID = props.studentID;
 
@@ -25,9 +24,21 @@ export default function Point(props) {
                
             }
         }
-        average = average/count;
-        props.point(average);
+          average = average/count;
+          props.point(average);
+          addPointToCourse(average);
     });
+  }
+
+  const addPointToCourse = (point) => {
+    Axios({
+      method:"post",
+      url:"http://localhost:4000/api/course/updateCoursePoint",
+      data:{
+        courseID: courseID,
+        point: point,
+      }
+    }).catch(err=>{throw err})
   }
 
   const submitHandle = () => {
@@ -40,9 +51,16 @@ export default function Point(props) {
         courseID: courseID,
         point: parseInt(point)
       }
-    }).then(() => {
-      alert("Thank you for grading the Course!");
-      getAverage();
+    }).then((result) => {
+      if(result.data.state === 1){
+        getAverage();
+       
+        alert("Thank you for grading the Course!");
+      } else if(result.data.state === 0){
+        props.point(0);
+        alert("You have to buy this  course to give comment!")
+      }   
+     
     }).catch(err => {
             localStorage.setItem('isLogin', false);
             window.open("http://localhost:3000/", "_parent");
