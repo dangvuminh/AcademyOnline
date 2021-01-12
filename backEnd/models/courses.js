@@ -57,8 +57,16 @@ module.exports = {
         const point = await db.promise().execute(
             `SELECT course_point FROM course WHERE course_id = ${courseID}`
         );
-        if(point[0] === 0)
+        if(point[0].length === 0)
         return 0;
         return point[0];
+    },
+    async getCoursesByTeacher(teacherID){
+        const list = await db.promise().execute(
+            `SELECT * FROM course WHERE teacher_fk = ${teacherID}`
+        );
+        if(list[0].length === 0)
+        return 0;
+        return list[0];
     }
 }

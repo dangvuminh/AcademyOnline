@@ -70,4 +70,16 @@ router.get("/getCoursePoint/:course_id",async function(req,res){
     res.json(point);
 })
 
+router.get("/getCoursesByTeacher/:teacher_id",async function(req,res){
+    let teacherID = req.params.teacher_id;
+    let list = await courseModel.getCoursesByTeacher(teacherID);
+    if(list === 0){
+        res.json({state:0})
+    } else {
+        res.json(list);
+    }
+    
+})
+
+
 module.exports = router;
