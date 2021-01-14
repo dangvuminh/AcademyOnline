@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 
 import "../../../css/teacher/teacherSignIn.css"
+import TeacherHome from "../teacher_home/teacherHome"
 import Axios from "axios"
 
 export default function TeacherSignIn() {
@@ -8,11 +9,6 @@ export default function TeacherSignIn() {
     const [password,setPassword] = useState("");
     const [isLogIn,setIsLogIn] = useState(false);
     const [err,setErr] = useState("");
-
-    useEffect(()=>{
-        if(isLogIn == true)
-        window.open(`http://localhost:3000/teacher-home/${username}`,"_parent");
-      },[isLogIn])
 
     const submitHandle = (e) => {
         e.preventDefault();
@@ -33,8 +29,12 @@ export default function TeacherSignIn() {
         })
     }
 
-    return (
-        <div className="teacherSignIn">
+    const drawTeacherHome = () => {
+        if(isLogIn === true){
+            return <TeacherHome username={username}/>
+        } else {
+            return (
+                <div className="teacherSignIn">
             <i class="fa fa-graduation-cap"></i>
             <form onSubmit={submitHandle} className="was-validated">
             <p style={{color:"red"}}>{err}</p>
@@ -54,6 +54,13 @@ export default function TeacherSignIn() {
         </div>
         <button type="submit" className="btn btn-primary">Enter</button>
       </form>
+        </div>
+            )
+        }
+    }
+    return (
+        <div>
+        {drawTeacherHome()}
         </div>
     )
 }

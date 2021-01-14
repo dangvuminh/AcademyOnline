@@ -6,13 +6,13 @@ router.get("/:category",async function(req,res){
     let categoryID = req.params.category;
     let courses = await courseModel.getCoursesByCategory(categoryID);
     res.json(courses);
-})
+});
 
 router.get("/detail/:courseID",async function(req,res){
     let courseID = req.params.courseID;
     let course = await courseModel.getSingle(courseID);
     res.json(course);
-})
+});
 
 router.post("/updateCourse",async function(req,res){
     let courseID = req.body.courseID;
@@ -26,7 +26,7 @@ router.post("/updateCourse",async function(req,res){
     } else {
         res.json({state:1});
     }
-})
+});
 
 router.post("/createCourse",async function(req,res){
     let courseName = req.body.courseName;
@@ -34,13 +34,14 @@ router.post("/createCourse",async function(req,res){
     let coursePrice = req.body.coursePrice;
     let teacherID = req.body.teacherID;
     let category = req.body.category;
-    let state = await courseModel.createCourse(courseName,courseContent,coursePrice,teacherID,category);
+    let courseState = req.body.courseState;
+    let state = await courseModel.createCourse(courseName,courseContent,coursePrice,teacherID,category,courseState);
     if(state == 0){
         res.json({state:0});
     } else {
         res.json({state:1});
     }
-})
+});
 
 router.post("/deleteCourse",async function(req,res){
     let courseID = req.body.courseID;
@@ -50,7 +51,7 @@ router.post("/deleteCourse",async function(req,res){
     } else {
         res.json({state:1});
     }
-})
+});
 
 router.post("/updateCoursePoint",async function(req,res){
     let courseID = req.body.courseID;
@@ -61,14 +62,14 @@ router.post("/updateCoursePoint",async function(req,res){
     } else {
         res.json({state:1});
     }
-})
+});
 
 
 router.get("/getCoursePoint/:course_id",async function(req,res){
     let courseID = req.params.course_id;
     let point = await courseModel.getCoursePoint(courseID);
     res.json(point);
-})
+});
 
 router.get("/getCoursesByTeacher/:teacher_id",async function(req,res){
     let teacherID = req.params.teacher_id;
@@ -79,7 +80,18 @@ router.get("/getCoursesByTeacher/:teacher_id",async function(req,res){
         res.json(list);
     }
     
-})
+});
 
+router.get("/updateCourseState",async function(req,res){
+    let courseID = req.body.courseID;
+    let courseState = req.body.courseState;
+    let state = await courseModel.updateCourseState(courseID,courseState);
+    if(state === 0){
+        res.json({state:0})
+    } else {
+        res.json({state:1});
+    }
+    
+});
 
 module.exports = router;

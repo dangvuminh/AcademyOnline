@@ -6,7 +6,6 @@ export default function AdminSignIn(props) {
     const [password,setPassword] = useState("");
    const [isLogIn,setIsLogIn] = useState(false);
     useEffect(()=>{
-      console.log("Yo man");
       if(isLogIn == true)
       window.open("http://localhost:3000/admin-home","_parent");
     },[isLogIn])

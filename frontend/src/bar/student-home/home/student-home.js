@@ -167,7 +167,6 @@ export default function StudentHome() {
     return (
         <div >
             {drawStudentHome()}
-
         </div>
     )
 }

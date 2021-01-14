@@ -12,7 +12,7 @@ router.get("/getTeacherList",async function(req,res){
 router.get("/getTeacherData/:username",async function(req,res){
     let username = req.params.username;
     let  teacher = await teacherModel.getTeacherData(username); 
-    res.send(teacher);
+    res.json(teacher);
 });
 
 router.post("/createTeacher",async function(req,res){

@@ -16,3 +16,7 @@ tr td{
     padding:30px;
     font-size: 20px;
 }
+
+tr td .btn-danger{
+    cursor:not-allowed;
+}

@@ -48,7 +48,8 @@ export default function CreateCourse() {
                     courseContent:courseContent,
                     coursePrice:coursePrice,
                     teacherID:teacherID,
-                    category:category
+                    category:category,
+                    courseState:0
                 }
             }).then((result)=> {
                 if(result.data.state == 1){

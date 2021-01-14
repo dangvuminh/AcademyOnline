@@ -15,10 +15,13 @@ const route_point_authen = require("./routes/route_point_authen")
 const route_point_no_authen = require("./routes/route_point_no_authen")
 const route_profile = require("./routes/route_profile")
 const route_teacher = require("./routes/route_teacher")
+const route_video = require("./routes/route_video")
+const route_file = require("./routes/route_file")
 
 const authen = require("./middleware/student.authen.mdw")
 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit:"50mb" ,extended: true ,parameterLimit:50000})); 
 app.use(cors());
 app.use(express.json());
 
@@ -26,12 +29,15 @@ app.use(express.json());
 app.use("/api/categories",route_categories);
 app.use("/api/getCoursesByCategory",route_courses);
 app.use("/api/course",route_courses);
+app.use("/api/video",route_video);
+app.use("/api/file",route_file);
 app.use("/api/getSingleCourse",route_courses);
 app.use("/api/student",route_student);
 app.use("/api",route_show_comment);
 app.use("/api",route_statistics);
 app.use("/api",route_point_no_authen);
 app.use("/api",route_teacher);
+
 
 app.use("/api",authen,route_enrollment);
 app.use("/api",authen,route_favorite_course);

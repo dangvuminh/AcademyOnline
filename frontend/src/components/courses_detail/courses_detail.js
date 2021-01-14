@@ -26,27 +26,6 @@ export default function Courses_detail() {
 
 
     useEffect(() => {
-    //     let average = 0;
-    //     let count = 0;
-    //     let pointArray = [];
-    //     Axios.get(`http://localhost:4000/api/getPointsById/${course_id}`).then((result) => {
-        
-    //     pointArray = result.data;
-    //     for(let  i = 0 ; i < pointArray.length ; i++){
-    //         if(pointArray[i].enrollment_point != null){
-    //             average += pointArray[i].enrollment_point;
-    //             count ++;
-               
-    //         }
-    //     }
-    //     if(count != 0){
-    //         average = average/count;
-    //         setPoint(average);
-    //     } else{
-    //         setPoint(0);
-    //     }
-        
-    // });
         Axios.get(`http://localhost:4000/api/course/getCoursePoint/${course_id}`).then((result) => {
             setPoint(result.data[0].course_point);
         })

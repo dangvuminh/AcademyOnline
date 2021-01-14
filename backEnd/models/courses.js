@@ -13,11 +13,11 @@ module.exports = {
         const single = await db.promise().execute(`SELECT * FROM course WHERE course_id = ${courseID}`);
         return single[0];
     },
-    async createCourse(courseName,courseContent,coursePrice,teacherID,category){
+    async createCourse(courseName,courseContent,coursePrice,teacherID,category,courseState){
         const state = await db.promise().execute(
             `INSERT INTO course  
-        (course_name,course_content ,course_price ,teacher_fk ,category_type) VALUES
-        ('${courseName}', '${courseContent}', ${coursePrice},${teacherID},${category})
+        (course_name,course_content ,course_price ,teacher_fk ,category_type,course_state) VALUES
+        ('${courseName}', '${courseContent}', ${coursePrice},${teacherID},${category},${courseState})
        `
         );
         if(state[0].affectedRows ===0)
@@ -68,5 +68,13 @@ module.exports = {
         if(list[0].length === 0)
         return 0;
         return list[0];
+    },
+    async updateCourseState(courseID,courseState){
+        const state = await db.promise().execute(
+            `UPDATE course SET course_state = ${courseState} WHERE course_id = ${courseID}`
+        );
+        if(state[0].affectedRows === 0)
+        return 0;
+        return 1;
     }
 }

@@ -4,20 +4,20 @@ import CourseHandle from "./courseHandle/courseHandle"
 import EditProfile from "./editProfile/editProfile"
 import Axios from "axios"
 
-export default function TeacherHome() {
+export default function TeacherHome(props) {
     const [courseState,setCourseState] =useState(0)
-    const params = useParams();
-    const username = params.username;
+    // const params = useParams();
+    // const username = params.username;
     const [teacher,setTeacher] = useState([]);
 
     useEffect(()=>{
-        Axios.get(`http://localhost:4000/api/getTeacherData/${username}`).then(result=>{
+        Axios.get(`http://localhost:4000/api/getTeacherData/${props.username}`).then(result=>{
             setTeacher(result.data[0]);
         })
     },[])
     const drawTeacherTask = () => {
         if(courseState === 1){
-            return <CourseHandle teacher={teacher}/>
+            return <CourseHandle teacher={teacher} courseHandleState={0}/>
         } else if(courseState === 2){
             return <EditProfile teacher={teacher}/>
         } 
@@ -27,10 +27,10 @@ export default function TeacherHome() {
             <h3>Teacher Home</h3>
             <ul className="nav nav-tabs">
                 <li className="nav-item" onClick={()=>{setCourseState(1)}}>
-                    <a className="nav-link " href="#">Courses</a>
+                    <a className="nav-link " >Courses</a>
                 </li>
                 <li className="nav-item" onClick={()=>{setCourseState(2)}}>
-                    <a className="nav-link" href="#">Edit Profile</a>
+                    <a className="nav-link" >Edit Profile</a>
                 </li>
             </ul>
 

@@ -26,6 +26,7 @@
 
 .profilePic{
     position: relative;
+    height: 400px;
 }
 
 .profilePicChanger{

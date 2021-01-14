@@ -12,9 +12,9 @@ import AuthenticatedRoute from "./components/admin/authen/authenticatedRoute"
 import NotFound from "./components/admin/authen/notFound"
 import AdminSignInRoute from "./components/admin/adminSignInRoute"
 import  EditForm from "./components/admin/courses/editForm"
-import AuthenTeacherRoute from "./components/teacher/authen/authenTeacherRoute"
 import TeacherSignIn from "./components/teacher/teacher_signIn/teacherSignIn"
-import TeacherHome from "./components/teacher/teacher_home/teacherHome"
+import StartLesson from "./bar/student-home/lesson/startLesson"
+
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
         <Route path="/courses/:course_id/:student_id" component={Courses_detail} exact/>
         <Route path="/student-home/:username" component={StudentHome} exact/>
         <Route path="/teacher" component={TeacherSignIn} exact/>
-
+        <Route path="/start-lesson/:course_id/:teacher_id" component={StartLesson} exact/>
         <AuthenticatedRoute
           path="/admin-home"
           exact
@@ -41,12 +41,6 @@ function App() {
           exact
           component={EditForm} 
         />
-
-        <AuthenTeacherRoute
-          path="/teacher-home/:username"
-          exact
-          component={TeacherHome} 
-        />  
 
         {/* <Route path="/admin" component={AdminSignIn}  exact/> */}
         <AdminSignInRoute path="/admin" component={AdminSignIn} />
